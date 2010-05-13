@@ -4,5 +4,6 @@ Release
 *.aps
 *.aws
 *.bak
-*.cproject
-*.project
+.cproject
+.project
+.gitignore
