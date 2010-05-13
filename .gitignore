@@ -1,0 +1,8 @@
+.settings
+default
+Release
+*.aps
+*.aws
+*.bak
+*.cproject
+*.project

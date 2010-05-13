@@ -1,0 +1,538 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>PSX: PSX</title>
+<link href="tabs.css" rel="stylesheet" type="text/css">
+<link href="doxygen.css" rel="stylesheet" type="text/css">
+</head><body>
+<!-- Erzeugt von Doxygen 1.5.9 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="main.html"><span>Hauptseite</span></a></li>
+      <li><a href="modules.html"><span>Module</span></a></li>
+      <li><a href="files.html"><span>Dateien</span></a></li>
+    </ul>
+  </div>
+</div>
+<div class="contents">
+<h1>PSX</h1>Eine Bibliothek um mit dem AVR einen Playstation Controller anzusteuern.  
+<a href="#_details">Mehr ...</a>
+<p>
+<table border="0" cellpadding="0" cellspacing="0">
+<tr><td></td></tr>
+<tr><td colspan="2"><br><h2>Makrodefinitionen</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g02ee0ee11a14a6a50f97167ce8e189db"></a><!-- doxytag: member="sbertling_psx::PSX_PORT" ref="g02ee0ee11a14a6a50f97167ce8e189db" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g02ee0ee11a14a6a50f97167ce8e189db">PSX_PORT</a>&nbsp;&nbsp;&nbsp;PORTB</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Port an dem das Pad angeschlossen wird. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g87dfac806f139e2f7cc5a759eaa02f54"></a><!-- doxytag: member="sbertling_psx::PSX_DDR" ref="g87dfac806f139e2f7cc5a759eaa02f54" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g87dfac806f139e2f7cc5a759eaa02f54">PSX_DDR</a>&nbsp;&nbsp;&nbsp;DDRB</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">DDR von Port, an dem das Pad angeschlossen ist. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="gdedf4cd0a9f2a94e9848da1417dd7369"></a><!-- doxytag: member="sbertling_psx::PSX_PIN" ref="gdedf4cd0a9f2a94e9848da1417dd7369" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#gdedf4cd0a9f2a94e9848da1417dd7369">PSX_PIN</a>&nbsp;&nbsp;&nbsp;PINB</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">PIN register von dem Port, an dem das Pad angeschlossen ist. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g40f496979bb9d7199cca5e0ce136e698"></a><!-- doxytag: member="sbertling_psx::CLK_PIN" ref="g40f496979bb9d7199cca5e0ce136e698" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g40f496979bb9d7199cca5e0ce136e698">CLK_PIN</a>&nbsp;&nbsp;&nbsp;PB2</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">CLK Pin. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g2670cee734a1d32f4f41c1ecd24a34f4"></a><!-- doxytag: member="sbertling_psx::ATT_PIN" ref="g2670cee734a1d32f4f41c1ecd24a34f4" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g2670cee734a1d32f4f41c1ecd24a34f4">ATT_PIN</a>&nbsp;&nbsp;&nbsp;PB3</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">ATT Pin. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g814f22b45823e731ddc8ac6aa1c8388c"></a><!-- doxytag: member="sbertling_psx::CMD_PIN" ref="g814f22b45823e731ddc8ac6aa1c8388c" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g814f22b45823e731ddc8ac6aa1c8388c">CMD_PIN</a>&nbsp;&nbsp;&nbsp;PB4</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">CMD Pin. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g63c933f788e6b3cf747d4e1e6cb455d2"></a><!-- doxytag: member="sbertling_psx::ACK_PIN" ref="g63c933f788e6b3cf747d4e1e6cb455d2" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g63c933f788e6b3cf747d4e1e6cb455d2">ACK_PIN</a>&nbsp;&nbsp;&nbsp;PB1</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">ACK Pin. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="gdad67fe595ea440c8f8247ec2cddf070"></a><!-- doxytag: member="sbertling_psx::DATA_PIN" ref="gdad67fe595ea440c8f8247ec2cddf070" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#gdad67fe595ea440c8f8247ec2cddf070">DATA_PIN</a>&nbsp;&nbsp;&nbsp;PB5</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">DATA Pin. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="gda472ea4d9f4eb74a074dc6f034981bc"></a><!-- doxytag: member="sbertling_psx::TIME_CLK" ref="gda472ea4d9f4eb74a074dc6f034981bc" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#gda472ea4d9f4eb74a074dc6f034981bc">TIME_CLK</a>&nbsp;&nbsp;&nbsp;5</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Zeit in ľs, die CLK auf einem Pegel bleibt. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g5e2c00dc12bb2c48ed7a12d608cde390"></a><!-- doxytag: member="sbertling_psx::WAIT_FOR_ACK" ref="g5e2c00dc12bb2c48ed7a12d608cde390" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g5e2c00dc12bb2c48ed7a12d608cde390">WAIT_FOR_ACK</a>&nbsp;&nbsp;&nbsp;while((PSX_PIN &amp; (1&lt;&lt;ACK_PIN)))</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Wartet bis ACK auf LOW ist. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="gb905e6aff2332984df0552c6b50203f2"></a><!-- doxytag: member="sbertling_psx::CMD_START" ref="gb905e6aff2332984df0552c6b50203f2" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#gb905e6aff2332984df0552c6b50203f2">CMD_START</a>&nbsp;&nbsp;&nbsp;0x01</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Startkommando, der Controller sendet daraufhin seine Daten. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="gb73476a273501fbccd3a257c5138d0c0"></a><!-- doxytag: member="sbertling_psx::CMD_REQUEST_DATA" ref="gb73476a273501fbccd3a257c5138d0c0" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#gb73476a273501fbccd3a257c5138d0c0">CMD_REQUEST_DATA</a>&nbsp;&nbsp;&nbsp;0x42</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Dieses Kommando wird direkt nach CMD_START gesendet. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g8cec63f1c0d443c689128fa497bef22d"></a><!-- doxytag: member="sbertling_psx::CMD_SET_CONFIG" ref="g8cec63f1c0d443c689128fa497bef22d" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g8cec63f1c0d443c689128fa497bef22d">CMD_SET_CONFIG</a>&nbsp;&nbsp;&nbsp;0x43</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Der Controller startet/endet den Config Modus. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="gb97974c97f9d2dfb60eab012420cd051"></a><!-- doxytag: member="sbertling_psx::CMD_SWITCH_MODE" ref="gb97974c97f9d2dfb60eab012420cd051" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#gb97974c97f9d2dfb60eab012420cd051">CMD_SWITCH_MODE</a>&nbsp;&nbsp;&nbsp;0x44</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Wechselt zwischen Analog und Digital Modus. Controller muss in Config Modus sein. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="gf37d32ff66a9aacc8ab73a2c27962415"></a><!-- doxytag: member="sbertling_psx::CMD_MORE_INFO" ref="gf37d32ff66a9aacc8ab73a2c27962415" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#gf37d32ff66a9aacc8ab73a2c27962415">CMD_MORE_INFO</a>&nbsp;&nbsp;&nbsp;0x45</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Fragt mehr Informationen ab. Controller muss in Config Modus sein. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g47795107fe88ffbca153a0cb465afba5"></a><!-- doxytag: member="sbertling_psx::CMD_PRESSURE_MODE" ref="g47795107fe88ffbca153a0cb465afba5" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g47795107fe88ffbca153a0cb465afba5">CMD_PRESSURE_MODE</a>&nbsp;&nbsp;&nbsp;0x4F</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Setzt den Druck Modus. Controller muss in Config Modus sein. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g433697a25587c6ffe8a14f02e5be9066"></a><!-- doxytag: member="sbertling_psx::CMD_IDLE" ref="g433697a25587c6ffe8a14f02e5be9066" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g433697a25587c6ffe8a14f02e5be9066">CMD_IDLE</a>&nbsp;&nbsp;&nbsp;0x00</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Ruhelage. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g83f2a9aefcab14183160459d70ead85b"></a><!-- doxytag: member="sbertling_psx::DATA_REQUEST_RESPONSE" ref="g83f2a9aefcab14183160459d70ead85b" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g83f2a9aefcab14183160459d70ead85b">DATA_REQUEST_RESPONSE</a>&nbsp;&nbsp;&nbsp;0x5A</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Der Controller sendet dies, nachdem CMD_REQUEST_DATA empfangen wurde. Ende des Headers. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g532bc183c7827d597c7f55fb55cc701d"></a><!-- doxytag: member="sbertling_psx::DATA_CONFIG_ON" ref="g532bc183c7827d597c7f55fb55cc701d" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g532bc183c7827d597c7f55fb55cc701d">DATA_CONFIG_ON</a>&nbsp;&nbsp;&nbsp;0xF3</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Headerinformation. Controller sendet dies, wenn der Config Modus an ist. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g14dd685c3436471dc667174375c88efa"></a><!-- doxytag: member="sbertling_psx::DATA_DIGITAL" ref="g14dd685c3436471dc667174375c88efa" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g14dd685c3436471dc667174375c88efa">DATA_DIGITAL</a>&nbsp;&nbsp;&nbsp;0x41</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Standard Digital Pad. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="gf5ff5e329b0851cac5752a513fbb0ece"></a><!-- doxytag: member="sbertling_psx::DATA_NEGCON" ref="gf5ff5e329b0851cac5752a513fbb0ece" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#gf5ff5e329b0851cac5752a513fbb0ece">DATA_NEGCON</a>&nbsp;&nbsp;&nbsp;0x23</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">NegCon Controller. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g7a977a36962413e00c4c6171e2e8228f"></a><!-- doxytag: member="sbertling_psx::DATA_ANALOG" ref="g7a977a36962413e00c4c6171e2e8228f" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g7a977a36962413e00c4c6171e2e8228f">DATA_ANALOG</a>&nbsp;&nbsp;&nbsp;0x73</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Analog Controller mit roter LED an. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g682caa4557dd755c46fc09ddcceaa0a9"></a><!-- doxytag: member="sbertling_psx::DATA_PSX_MOUSE" ref="g682caa4557dd755c46fc09ddcceaa0a9" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g682caa4557dd755c46fc09ddcceaa0a9">DATA_PSX_MOUSE</a>&nbsp;&nbsp;&nbsp;0x12</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">PSX Maus. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g3eba236539eb518abf1df3687587d994"></a><!-- doxytag: member="sbertling_psx::BUTTON_SLCT" ref="g3eba236539eb518abf1df3687587d994" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g3eba236539eb518abf1df3687587d994">BUTTON_SLCT</a>&nbsp;&nbsp;&nbsp;0x0100</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Select Taste. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g8f6ea81b68d7d7da25800617fa1f9f2a"></a><!-- doxytag: member="sbertling_psx::BUTTON_JOYL" ref="g8f6ea81b68d7d7da25800617fa1f9f2a" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g8f6ea81b68d7d7da25800617fa1f9f2a">BUTTON_JOYL</a>&nbsp;&nbsp;&nbsp;0x0200</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">L3. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g8e12cf8f95b23d585e5806cac5109680"></a><!-- doxytag: member="sbertling_psx::BUTTON_JOYR" ref="g8e12cf8f95b23d585e5806cac5109680" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g8e12cf8f95b23d585e5806cac5109680">BUTTON_JOYR</a>&nbsp;&nbsp;&nbsp;0x0400</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">R3. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g0dd865ec0061ef01902beba5e257e298"></a><!-- doxytag: member="sbertling_psx::BUTTON_START" ref="g0dd865ec0061ef01902beba5e257e298" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g0dd865ec0061ef01902beba5e257e298">BUTTON_START</a>&nbsp;&nbsp;&nbsp;0x0800</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Start Taste. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g7639b378d6f757175ed0f9e8552e6cea"></a><!-- doxytag: member="sbertling_psx::BUTTON_UP" ref="g7639b378d6f757175ed0f9e8552e6cea" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g7639b378d6f757175ed0f9e8552e6cea">BUTTON_UP</a>&nbsp;&nbsp;&nbsp;0x1000</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Steuerkreuz oben. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g4cebcc5780890f5f5fbca9d072ea9652"></a><!-- doxytag: member="sbertling_psx::BUTTON_RIGHT" ref="g4cebcc5780890f5f5fbca9d072ea9652" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g4cebcc5780890f5f5fbca9d072ea9652">BUTTON_RIGHT</a>&nbsp;&nbsp;&nbsp;0x2000</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Steuerkreuz rechts. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g7e8516b8781963aa69154f9fc67b658a"></a><!-- doxytag: member="sbertling_psx::BUTTON_DOWN" ref="g7e8516b8781963aa69154f9fc67b658a" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g7e8516b8781963aa69154f9fc67b658a">BUTTON_DOWN</a>&nbsp;&nbsp;&nbsp;0x4000</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Steuerkreuz unten. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="gd08344c00ddb49531348245d0c82987f"></a><!-- doxytag: member="sbertling_psx::BUTTON_LEFT" ref="gd08344c00ddb49531348245d0c82987f" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#gd08344c00ddb49531348245d0c82987f">BUTTON_LEFT</a>&nbsp;&nbsp;&nbsp;0x8000</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Steuerkreuz links. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g30bb0bb1edb52038138602344a892fc8"></a><!-- doxytag: member="sbertling_psx::BUTTON_L2" ref="g30bb0bb1edb52038138602344a892fc8" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g30bb0bb1edb52038138602344a892fc8">BUTTON_L2</a>&nbsp;&nbsp;&nbsp;0x01</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">L1 Taste. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g7de1af17484bf0192c373643c2ef10ec"></a><!-- doxytag: member="sbertling_psx::BUTTON_R2" ref="g7de1af17484bf0192c373643c2ef10ec" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g7de1af17484bf0192c373643c2ef10ec">BUTTON_R2</a>&nbsp;&nbsp;&nbsp;0x02</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">R1 Taste. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g76cbe60b17d0d40b6f4441b898504f69"></a><!-- doxytag: member="sbertling_psx::BUTTON_L1" ref="g76cbe60b17d0d40b6f4441b898504f69" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g76cbe60b17d0d40b6f4441b898504f69">BUTTON_L1</a>&nbsp;&nbsp;&nbsp;0x04</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">L2 Taste. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g0d1e25e9a7b1ae94e302e91314270941"></a><!-- doxytag: member="sbertling_psx::BUTTON_R1" ref="g0d1e25e9a7b1ae94e302e91314270941" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g0d1e25e9a7b1ae94e302e91314270941">BUTTON_R1</a>&nbsp;&nbsp;&nbsp;0x08</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">R2 Taste. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="ge56c3ac9d22c586e15eb69415f4769bf"></a><!-- doxytag: member="sbertling_psx::BUTTON_TRIANGLE" ref="ge56c3ac9d22c586e15eb69415f4769bf" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#ge56c3ac9d22c586e15eb69415f4769bf">BUTTON_TRIANGLE</a>&nbsp;&nbsp;&nbsp;0x10</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Dreieck Taste. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g3d686fc450fac7a18bca3057be75ad21"></a><!-- doxytag: member="sbertling_psx::BUTTON_CIRCLE" ref="g3d686fc450fac7a18bca3057be75ad21" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g3d686fc450fac7a18bca3057be75ad21">BUTTON_CIRCLE</a>&nbsp;&nbsp;&nbsp;0x20</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">O Taste. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="gfc44ef5c16049f9a0f3447360374bbbd"></a><!-- doxytag: member="sbertling_psx::BUTTON_CROSS" ref="gfc44ef5c16049f9a0f3447360374bbbd" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#gfc44ef5c16049f9a0f3447360374bbbd">BUTTON_CROSS</a>&nbsp;&nbsp;&nbsp;0x40</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">X Taste. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g9252de56849507a369e76ec9569fe804"></a><!-- doxytag: member="sbertling_psx::BUTTON_SQUARE" ref="g9252de56849507a369e76ec9569fe804" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g9252de56849507a369e76ec9569fe804">BUTTON_SQUARE</a>&nbsp;&nbsp;&nbsp;0x80</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Quadrat Taste. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g6d5ae57e6753578903e1ef8ef8b153ca"></a><!-- doxytag: member="sbertling_psx::STICK_RIGHT_X" ref="g6d5ae57e6753578903e1ef8ef8b153ca" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g6d5ae57e6753578903e1ef8ef8b153ca">STICK_RIGHT_X</a>&nbsp;&nbsp;&nbsp;0x01</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Rechter Analogstick in X Richtung. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g7dd84428fb470e0cb30a0ed991ca2cac"></a><!-- doxytag: member="sbertling_psx::STICK_RIGHT_Y" ref="g7dd84428fb470e0cb30a0ed991ca2cac" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g7dd84428fb470e0cb30a0ed991ca2cac">STICK_RIGHT_Y</a>&nbsp;&nbsp;&nbsp;0x02</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Rechter Analogstick in Y Richtung. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g2871ba4640bdf84d057fba0b5b0291bd"></a><!-- doxytag: member="sbertling_psx::STICK_LEFT_X" ref="g2871ba4640bdf84d057fba0b5b0291bd" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g2871ba4640bdf84d057fba0b5b0291bd">STICK_LEFT_X</a>&nbsp;&nbsp;&nbsp;0x04</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Linker Analogstick in X Richtung. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="g745507c674706b55a057f42abc11c7cd"></a><!-- doxytag: member="sbertling_psx::STICK_LEFT_Y" ref="g745507c674706b55a057f42abc11c7cd" args="" -->
+#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g745507c674706b55a057f42abc11c7cd">STICK_LEFT_Y</a>&nbsp;&nbsp;&nbsp;0x08</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Linker Analogstick in Y Richtung. <br></td></tr>
+<tr><td colspan="2"><br><h2>Funktionen</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="gf9046959e4bf337331e4a598fc34d8a9"></a><!-- doxytag: member="sbertling_psx::PSX_init" ref="gf9046959e4bf337331e4a598fc34d8a9" args="(void)" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#gf9046959e4bf337331e4a598fc34d8a9">PSX_init</a> (void)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Initialisiert die Ports des AVR. <br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">uint8_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g770d69ab9c9335fea389e53ceb670830">PSX_get_header</a> (uint8_t cmd)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Liest den Header aus.  <a href="#g770d69ab9c9335fea389e53ceb670830"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g52b1fe8f6c346c01f0562d76b86d11ca">PSX_set_config_mode</a> (uint8_t state)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Versetzt den Controller in den Config Mode.  <a href="#g52b1fe8f6c346c01f0562d76b86d11ca"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g543b314b6e1e1445f8e0bfa4fe517160">PSX_set_input_mode</a> (uint8_t mode, uint8_t lock)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Setzt die Eingabe Methode (Analog oder Digital).  <a href="#g543b314b6e1e1445f8e0bfa4fe517160"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#ge4ef19978fbd8f2b963f06a9b7ff090f">PSX_set_pressure_mode</a> (uint8_t state)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Configuriert den Controller Druckdaten der Tasten zu senden.  <a href="#ge4ef19978fbd8f2b963f06a9b7ff090f"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">uint8_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g84df423fe7925c3178117df1b2835459">PSX_get_button_state</a> (void)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Fragt den aktuellen Status des Controllers ab.  <a href="#g84df423fe7925c3178117df1b2835459"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">uint8_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d">PSX_receive_data</a> (uint8_t cmd)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird.  <a href="#g77115235acb26f17b16feaabb4d8158d"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">uint8_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g394c604cef2eb8973740609c4ecd0b68">PSX_button_pressed</a> (uint16_t button)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Überprüft, ob eine bestimmte Taste gedrückt ist.  <a href="#g394c604cef2eb8973740609c4ecd0b68"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">uint8_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g832f1b84509d56c2cee8b20c7d6865bb">PSX_get_analog_value</a> (uint8_t stick)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Gibt den Wert des als Parameter übergebenen Analogsticks zurück.  <a href="#g832f1b84509d56c2cee8b20c7d6865bb"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">uint8_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sbertling__psx.html#g4321dfbc2340cb7460ddf2f2e733b5df">PSX_get_button_pressure</a> (uint8_t button)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Gibt den aktuellen Druckwert einer Taste zurück.  <a href="#g4321dfbc2340cb7460ddf2f2e733b5df"></a><br></td></tr>
+</table>
+<hr><a name="_details"></a><h2>Ausführliche Beschreibung</h2>
+Eine Bibliothek um mit dem AVR einen Playstation Controller anzusteuern. 
+<p>
+<div class="fragment"><pre class="fragment"><span class="preprocessor"> #include "psx.h"</span> 
+</pre></div> <div class="fragment"><pre class="fragment"> DATA -|---__________--__|--
+          0 1 2 3 4 5 6 7
+ CLK  -|-_-_-_-_-_-_-_-_-|--
+        0 1 2 3 4 5 6 7
+ CMD  -|__--________--__-|--
+</pre></div><p>
+<dl class="author" compact><dt><b>Autor:</b></dt><dd>Simon Bertling </dd></dl>
+<hr><h2>Dokumentation der Funktionen</h2>
+<a class="anchor" name="g394c604cef2eb8973740609c4ecd0b68"></a><!-- doxytag: member="psx.h::PSX_button_pressed" ref="g394c604cef2eb8973740609c4ecd0b68" args="(uint16_t button)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t PSX_button_pressed           </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&nbsp;</td>
+          <td class="paramname"> <em>button</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Überprüft, ob eine bestimmte Taste gedrückt ist. 
+<p>
+<dl compact><dt><b>Parameter:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>button</em>&nbsp;</td><td>Taste, kann auch mit ODER verknüpft werden </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Rückgabe:</b></dt><dd>0: Taste nicht gedrück, sonst1: Taste gedrückt </dd></dl>
+
+<p>Definiert in Zeile <a class="el" href="psx_8c_source.html#l00206">206</a> der Datei <a class="el" href="psx_8c_source.html">psx.c</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="g832f1b84509d56c2cee8b20c7d6865bb"></a><!-- doxytag: member="psx.h::PSX_get_analog_value" ref="g832f1b84509d56c2cee8b20c7d6865bb" args="(uint8_t stick)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t PSX_get_analog_value           </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&nbsp;</td>
+          <td class="paramname"> <em>stick</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Gibt den Wert des als Parameter übergebenen Analogsticks zurück. 
+<p>
+<dl compact><dt><b>Parameter:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>stick</em>&nbsp;</td><td>zB STICK_LEFT_X </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Rückgabe:</b></dt><dd>Analog Wert des Sticks </dd></dl>
+
+<p>Definiert in Zeile <a class="el" href="psx_8c_source.html#l00211">211</a> der Datei <a class="el" href="psx_8c_source.html">psx.c</a>.</p>
+
+<p>Benutzt <a class="el" href="psx_8h_source.html#l00104">STICK_LEFT_X</a>, <a class="el" href="psx_8h_source.html#l00105">STICK_LEFT_Y</a>, <a class="el" href="psx_8h_source.html#l00102">STICK_RIGHT_X</a> und <a class="el" href="psx_8h_source.html#l00103">STICK_RIGHT_Y</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="g4321dfbc2340cb7460ddf2f2e733b5df"></a><!-- doxytag: member="psx.h::PSX_get_button_pressure" ref="g4321dfbc2340cb7460ddf2f2e733b5df" args="(uint8_t button)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t PSX_get_button_pressure           </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&nbsp;</td>
+          <td class="paramname"> <em>button</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Gibt den aktuellen Druckwert einer Taste zurück. 
+<p>
+<dl compact><dt><b>Parameter:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>button</em>&nbsp;</td><td>Taste, die abgefragt werden soll </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Rückgabe:</b></dt><dd>aktueller Druckwert einer Taste </dd></dl>
+
+<p>Definiert in Zeile <a class="el" href="psx_8c_source.html#l00233">233</a> der Datei <a class="el" href="psx_8c_source.html">psx.c</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="g84df423fe7925c3178117df1b2835459"></a><!-- doxytag: member="psx.h::PSX_get_button_state" ref="g84df423fe7925c3178117df1b2835459" args="(void)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t PSX_get_button_state           </td>
+          <td>(</td>
+          <td class="paramtype">void&nbsp;</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Fragt den aktuellen Status des Controllers ab. 
+<p>
+<dl class="return" compact><dt><b>Rückgabe:</b></dt><dd>0: Fehler, 1: Erfolg </dd></dl>
+
+<p>Definiert in Zeile <a class="el" href="psx_8c_source.html#l00145">145</a> der Datei <a class="el" href="psx_8c_source.html">psx.c</a>.</p>
+
+<p>Benutzt <a class="el" href="psx_8h_source.html#l00033">ATT_PIN</a>, <a class="el" href="psx_8h_source.html#l00067">CMD_IDLE</a>, <a class="el" href="psx_8h_source.html#l00050">CMD_REQUEST_DATA</a>, <a class="el" href="psx_8h_source.html#l00071">DATA_CONFIG_ON</a>, <a class="el" href="psx_8c_source.html#l00039">PSX_get_header()</a>, <a class="el" href="psx_8h_source.html#l00028">PSX_PORT</a>, <a class="el" href="psx_8c_source.html#l00184">PSX_receive_data()</a>, <a class="el" href="psx_8h_source.html#l00039">TIME_CLK</a> und <a class="el" href="psx_8h_source.html#l00046">WAIT_FOR_ACK</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="g770d69ab9c9335fea389e53ceb670830"></a><!-- doxytag: member="psx.h::PSX_get_header" ref="g770d69ab9c9335fea389e53ceb670830" args="(uint8_t cmd)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t PSX_get_header           </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&nbsp;</td>
+          <td class="paramname"> <em>cmd</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Liest den Header aus. 
+<p>
+<dl compact><dt><b>Parameter:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>cmd</em>&nbsp;</td><td>Zu sendender Befehl </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Rückgabe:</b></dt><dd>Controller Status </dd></dl>
+
+<p>Definiert in Zeile <a class="el" href="psx_8c_source.html#l00039">39</a> der Datei <a class="el" href="psx_8c_source.html">psx.c</a>.</p>
+
+<p>Benutzt <a class="el" href="psx_8h_source.html#l00067">CMD_IDLE</a>, <a class="el" href="psx_8h_source.html#l00049">CMD_START</a>, <a class="el" href="psx_8c_source.html#l00184">PSX_receive_data()</a> und <a class="el" href="psx_8h_source.html#l00046">WAIT_FOR_ACK</a>.</p>
+
+<p>Wird benutzt von <a class="el" href="psx_8c_source.html#l00145">PSX_get_button_state()</a>, <a class="el" href="psx_8c_source.html#l00055">PSX_set_config_mode()</a>, <a class="el" href="psx_8c_source.html#l00087">PSX_set_input_mode()</a> und <a class="el" href="psx_8c_source.html#l00116">PSX_set_pressure_mode()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="g77115235acb26f17b16feaabb4d8158d"></a><!-- doxytag: member="psx.h::PSX_receive_data" ref="g77115235acb26f17b16feaabb4d8158d" args="(uint8_t cmd)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t PSX_receive_data           </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&nbsp;</td>
+          <td class="paramname"> <em>cmd</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird. 
+<p>
+<dl compact><dt><b>Parameter:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>cmd</em>&nbsp;</td><td>Zu sendender Befehl </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Rückgabe:</b></dt><dd>Datenbyte des Controllers </dd></dl>
+
+<p>Definiert in Zeile <a class="el" href="psx_8c_source.html#l00184">184</a> der Datei <a class="el" href="psx_8c_source.html">psx.c</a>.</p>
+
+<p>Benutzt <a class="el" href="psx_8h_source.html#l00032">CLK_PIN</a>, <a class="el" href="psx_8h_source.html#l00034">CMD_PIN</a>, <a class="el" href="psx_8h_source.html#l00036">DATA_PIN</a>, <a class="el" href="psx_8h_source.html#l00030">PSX_PIN</a>, <a class="el" href="psx_8h_source.html#l00028">PSX_PORT</a> und <a class="el" href="psx_8h_source.html#l00039">TIME_CLK</a>.</p>
+
+<p>Wird benutzt von <a class="el" href="psx_8c_source.html#l00145">PSX_get_button_state()</a>, <a class="el" href="psx_8c_source.html#l00039">PSX_get_header()</a>, <a class="el" href="psx_8c_source.html#l00055">PSX_set_config_mode()</a>, <a class="el" href="psx_8c_source.html#l00087">PSX_set_input_mode()</a> und <a class="el" href="psx_8c_source.html#l00116">PSX_set_pressure_mode()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="g52b1fe8f6c346c01f0562d76b86d11ca"></a><!-- doxytag: member="psx.h::PSX_set_config_mode" ref="g52b1fe8f6c346c01f0562d76b86d11ca" args="(uint8_t state)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PSX_set_config_mode           </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&nbsp;</td>
+          <td class="paramname"> <em>state</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Versetzt den Controller in den Config Mode. 
+<p>
+<dl compact><dt><b>Parameter:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>state</em>&nbsp;</td><td>CMD_CONFIG_MODE_ON oder CMD_CONFIG_MODE_OFF </td></tr>
+  </table>
+</dl>
+
+<p>Definiert in Zeile <a class="el" href="psx_8c_source.html#l00055">55</a> der Datei <a class="el" href="psx_8c_source.html">psx.c</a>.</p>
+
+<p>Benutzt <a class="el" href="psx_8h_source.html#l00033">ATT_PIN</a>, <a class="el" href="psx_8h_source.html#l00067">CMD_IDLE</a>, <a class="el" href="psx_8h_source.html#l00051">CMD_SET_CONFIG</a>, <a class="el" href="psx_8c_source.html#l00039">PSX_get_header()</a>, <a class="el" href="psx_8h_source.html#l00028">PSX_PORT</a>, <a class="el" href="psx_8c_source.html#l00184">PSX_receive_data()</a>, <a class="el" href="psx_8h_source.html#l00039">TIME_CLK</a> und <a class="el" href="psx_8h_source.html#l00046">WAIT_FOR_ACK</a>.</p>
+
+<p>Wird benutzt von <a class="el" href="psx_8c_source.html#l00087">PSX_set_input_mode()</a> und <a class="el" href="psx_8c_source.html#l00116">PSX_set_pressure_mode()</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="g543b314b6e1e1445f8e0bfa4fe517160"></a><!-- doxytag: member="psx.h::PSX_set_input_mode" ref="g543b314b6e1e1445f8e0bfa4fe517160" args="(uint8_t mode, uint8_t lock)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PSX_set_input_mode           </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&nbsp;</td>
+          <td class="paramname"> <em>mode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&nbsp;</td>
+          <td class="paramname"> <em>lock</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Setzt die Eingabe Methode (Analog oder Digital). 
+<p>
+<dl compact><dt><b>Parameter:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>mode</em>&nbsp;</td><td>Modus, Analog oder Digital </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>lock</em>&nbsp;</td><td>Lock Modus an oder aus </td></tr>
+  </table>
+</dl>
+
+<p>Definiert in Zeile <a class="el" href="psx_8c_source.html#l00087">87</a> der Datei <a class="el" href="psx_8c_source.html">psx.c</a>.</p>
+
+<p>Benutzt <a class="el" href="psx_8h_source.html#l00033">ATT_PIN</a>, <a class="el" href="psx_8h_source.html#l00067">CMD_IDLE</a>, <a class="el" href="psx_8h_source.html#l00055">CMD_SWITCH_MODE</a>, <a class="el" href="psx_8h_source.html#l00071">DATA_CONFIG_ON</a>, <a class="el" href="psx_8c_source.html#l00039">PSX_get_header()</a>, <a class="el" href="psx_8h_source.html#l00028">PSX_PORT</a>, <a class="el" href="psx_8c_source.html#l00184">PSX_receive_data()</a>, <a class="el" href="psx_8c_source.html#l00055">PSX_set_config_mode()</a>, <a class="el" href="psx_8h_source.html#l00039">TIME_CLK</a> und <a class="el" href="psx_8h_source.html#l00046">WAIT_FOR_ACK</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="ge4ef19978fbd8f2b963f06a9b7ff090f"></a><!-- doxytag: member="psx.h::PSX_set_pressure_mode" ref="ge4ef19978fbd8f2b963f06a9b7ff090f" args="(uint8_t state)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PSX_set_pressure_mode           </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&nbsp;</td>
+          <td class="paramname"> <em>state</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Configuriert den Controller Druckdaten der Tasten zu senden. 
+<p>
+<dl compact><dt><b>Parameter:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>state</em>&nbsp;</td><td>An oder Aus </td></tr>
+  </table>
+</dl>
+
+<p>Definiert in Zeile <a class="el" href="psx_8c_source.html#l00116">116</a> der Datei <a class="el" href="psx_8c_source.html">psx.c</a>.</p>
+
+<p>Benutzt <a class="el" href="psx_8h_source.html#l00033">ATT_PIN</a>, <a class="el" href="psx_8h_source.html#l00067">CMD_IDLE</a>, <a class="el" href="psx_8h_source.html#l00061">CMD_PRESSURE_MODE</a>, <a class="el" href="psx_8h_source.html#l00071">DATA_CONFIG_ON</a>, <a class="el" href="psx_8c_source.html#l00039">PSX_get_header()</a>, <a class="el" href="psx_8h_source.html#l00028">PSX_PORT</a>, <a class="el" href="psx_8c_source.html#l00184">PSX_receive_data()</a>, <a class="el" href="psx_8c_source.html#l00055">PSX_set_config_mode()</a>, <a class="el" href="psx_8h_source.html#l00039">TIME_CLK</a> und <a class="el" href="psx_8h_source.html#l00046">WAIT_FOR_ACK</a>.</p>
+
+</div>
+</div><p>
+</div>
+<hr size="1"><address style="text-align: right;"><small>Erzeugt am Thu May 13 20:52:32 2010 für PSX von&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.9 </small></address>
+</body>
+</html>

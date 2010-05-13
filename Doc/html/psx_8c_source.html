@@ -1,0 +1,262 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>PSX: psx.c Quellcode</title>
+<link href="tabs.css" rel="stylesheet" type="text/css">
+<link href="doxygen.css" rel="stylesheet" type="text/css">
+</head><body>
+<!-- Erzeugt von Doxygen 1.5.9 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="main.html"><span>Hauptseite</span></a></li>
+      <li><a href="modules.html"><span>Module</span></a></li>
+      <li class="current"><a href="files.html"><span>Dateien</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs">
+    <ul>
+      <li><a href="files.html"><span>Auflistung&nbsp;der&nbsp;Dateien</span></a></li>
+    </ul>
+  </div>
+<h1>psx.c</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#include "psx.h"</span>
+<a name="l00002"></a>00002 
+<a name="l00003"></a>00003 <span class="comment">// GLOBALE VARIABLE ///////////////////////////////////////////////////////</span>
+<a name="l00004"></a>00004 
+<a name="l00005"></a>00005 uint8_t pad_state = 0;
+<a name="l00006"></a>00006 uint16_t button_state = 0;
+<a name="l00007"></a>00007 uint8_t stick_state_right_x = 0;
+<a name="l00008"></a>00008 uint8_t stick_state_right_y = 0;
+<a name="l00009"></a>00009 uint8_t stick_state_left_x = 0;
+<a name="l00010"></a>00010 uint8_t stick_state_left_y = 0;
+<a name="l00011"></a>00011 
+<a name="l00012"></a>00012 uint8_t button_states[MAX_BYTES];
+<a name="l00013"></a>00013 uint8_t button_pressure[MAX_BYTES_BUTTON_PRESSURE];
+<a name="l00014"></a>00014 
+<a name="l00015"></a>00015 
+<a name="l00016"></a>00016 <span class="comment">// IMPLEMENTATION //////////////////////////////////////////////////////////</span>
+<a name="l00017"></a>00017 
+<a name="l00018"></a><a class="code" href="group__sbertling__psx.html#gf9046959e4bf337331e4a598fc34d8a9">00018</a> <span class="keywordtype">void</span> <a class="code" href="group__sbertling__psx.html#gf9046959e4bf337331e4a598fc34d8a9" title="Initialisiert die Ports des AVR.">PSX_init</a>()
+<a name="l00019"></a>00019 {
+<a name="l00020"></a>00020         <span class="comment">// PSX_DDR, PSX_PORT und PSX_PIN löschen</span>
+<a name="l00021"></a>00021         <a class="code" href="group__sbertling__psx.html#g87dfac806f139e2f7cc5a759eaa02f54" title="DDR von Port, an dem das Pad angeschlossen ist.">PSX_DDR</a> = 0;
+<a name="l00022"></a>00022         <a class="code" href="group__sbertling__psx.html#g02ee0ee11a14a6a50f97167ce8e189db" title="Port an dem das Pad angeschlossen wird.">PSX_PORT</a> = 0;
+<a name="l00023"></a>00023         <a class="code" href="group__sbertling__psx.html#gdedf4cd0a9f2a94e9848da1417dd7369" title="PIN register von dem Port, an dem das Pad angeschlossen ist.">PSX_PIN</a> = 0;
+<a name="l00024"></a>00024         <span class="comment">// ATT, CLOCK und CMD als Ausgang setzen</span>
+<a name="l00025"></a>00025         <a class="code" href="group__sbertling__psx.html#g87dfac806f139e2f7cc5a759eaa02f54" title="DDR von Port, an dem das Pad angeschlossen ist.">PSX_DDR</a> = (1&lt;&lt;<a class="code" href="group__sbertling__psx.html#g2670cee734a1d32f4f41c1ecd24a34f4" title="ATT Pin.">ATT_PIN</a>) | (1&lt;&lt;<a class="code" href="group__sbertling__psx.html#g40f496979bb9d7199cca5e0ce136e698" title="CLK Pin.">CLK_PIN</a>) | (1&lt;&lt;<a class="code" href="group__sbertling__psx.html#g814f22b45823e731ddc8ac6aa1c8388c" title="CMD Pin.">CMD_PIN</a>);
+<a name="l00026"></a>00026         <span class="comment">// Pullups aktivieren</span>
+<a name="l00027"></a>00027         <a class="code" href="group__sbertling__psx.html#g02ee0ee11a14a6a50f97167ce8e189db" title="Port an dem das Pad angeschlossen wird.">PSX_PORT</a> = (1&lt;&lt;<a class="code" href="group__sbertling__psx.html#gdad67fe595ea440c8f8247ec2cddf070" title="DATA Pin.">DATA_PIN</a>) | (1&lt;&lt;<a class="code" href="group__sbertling__psx.html#g63c933f788e6b3cf747d4e1e6cb455d2" title="ACK Pin.">ACK_PIN</a>);
+<a name="l00028"></a>00028         <span class="comment">// ATT initial auf HIGH setzen</span>
+<a name="l00029"></a>00029         <a class="code" href="group__sbertling__psx.html#g02ee0ee11a14a6a50f97167ce8e189db" title="Port an dem das Pad angeschlossen wird.">PSX_PORT</a> |= (1&lt;&lt;<a class="code" href="group__sbertling__psx.html#g2670cee734a1d32f4f41c1ecd24a34f4" title="ATT Pin.">ATT_PIN</a>);
+<a name="l00030"></a>00030         <span class="comment">// CLK initial auf HIGH setzen</span>
+<a name="l00031"></a>00031         <a class="code" href="group__sbertling__psx.html#g02ee0ee11a14a6a50f97167ce8e189db" title="Port an dem das Pad angeschlossen wird.">PSX_PORT</a> |= (1&lt;&lt;<a class="code" href="group__sbertling__psx.html#g40f496979bb9d7199cca5e0ce136e698" title="CLK Pin.">CLK_PIN</a>);
+<a name="l00032"></a>00032         
+<a name="l00033"></a>00033         <span class="keywordflow">for</span>(uint8_t i = 0; i &lt; MAX_BYTES; i++)
+<a name="l00034"></a>00034                 button_states[i] = 0;
+<a name="l00035"></a>00035         <span class="keywordflow">for</span>(uint8_t i = 0; i &lt; MAX_BYTES_BUTTON_PRESSURE; i++)
+<a name="l00036"></a>00036                 button_pressure[i] = 0;
+<a name="l00037"></a>00037 }
+<a name="l00038"></a>00038 
+<a name="l00039"></a><a class="code" href="group__sbertling__psx.html#g770d69ab9c9335fea389e53ceb670830">00039</a> uint8_t <a class="code" href="group__sbertling__psx.html#g770d69ab9c9335fea389e53ceb670830" title="Liest den Header aus.">PSX_get_header</a>(uint8_t cmd)
+<a name="l00040"></a>00040 {
+<a name="l00041"></a>00041         uint8_t data = 0;
+<a name="l00042"></a>00042         
+<a name="l00043"></a>00043         <a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d" title="Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird...">PSX_receive_data</a>(<a class="code" href="group__sbertling__psx.html#gb905e6aff2332984df0552c6b50203f2" title="Startkommando, der Controller sendet daraufhin seine Daten.">CMD_START</a>);
+<a name="l00044"></a>00044         <a class="code" href="group__sbertling__psx.html#g5e2c00dc12bb2c48ed7a12d608cde390" title="Wartet bis ACK auf LOW ist.">WAIT_FOR_ACK</a>;
+<a name="l00045"></a>00045         data = <a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d" title="Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird...">PSX_receive_data</a>(cmd);
+<a name="l00046"></a>00046         <a class="code" href="group__sbertling__psx.html#g5e2c00dc12bb2c48ed7a12d608cde390" title="Wartet bis ACK auf LOW ist.">WAIT_FOR_ACK</a>;
+<a name="l00047"></a>00047         <a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d" title="Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird...">PSX_receive_data</a>(<a class="code" href="group__sbertling__psx.html#g433697a25587c6ffe8a14f02e5be9066" title="Ruhelage.">CMD_IDLE</a>);
+<a name="l00048"></a>00048         <a class="code" href="group__sbertling__psx.html#g5e2c00dc12bb2c48ed7a12d608cde390" title="Wartet bis ACK auf LOW ist.">WAIT_FOR_ACK</a>;
+<a name="l00049"></a>00049         
+<a name="l00050"></a>00050         pad_state = data;
+<a name="l00051"></a>00051         
+<a name="l00052"></a>00052         <span class="keywordflow">return</span> data;
+<a name="l00053"></a>00053 }
+<a name="l00054"></a>00054 
+<a name="l00055"></a><a class="code" href="group__sbertling__psx.html#g52b1fe8f6c346c01f0562d76b86d11ca">00055</a> <span class="keywordtype">void</span> <a class="code" href="group__sbertling__psx.html#g52b1fe8f6c346c01f0562d76b86d11ca" title="Versetzt den Controller in den Config Mode.">PSX_set_config_mode</a>(uint8_t state)
+<a name="l00056"></a>00056 {
+<a name="l00057"></a>00057         _delay_ms(DELAY_TIME);
+<a name="l00058"></a>00058         <span class="comment">// ATT auf LOW setzen</span>
+<a name="l00059"></a>00059         <a class="code" href="group__sbertling__psx.html#g02ee0ee11a14a6a50f97167ce8e189db" title="Port an dem das Pad angeschlossen wird.">PSX_PORT</a> &amp;= ~(1&lt;&lt;<a class="code" href="group__sbertling__psx.html#g2670cee734a1d32f4f41c1ecd24a34f4" title="ATT Pin.">ATT_PIN</a>);
+<a name="l00060"></a>00060         
+<a name="l00061"></a>00061         <a class="code" href="group__sbertling__psx.html#g770d69ab9c9335fea389e53ceb670830" title="Liest den Header aus.">PSX_get_header</a>(<a class="code" href="group__sbertling__psx.html#g8cec63f1c0d443c689128fa497bef22d" title="Der Controller startet/endet den Config Modus.">CMD_SET_CONFIG</a>);
+<a name="l00062"></a>00062         
+<a name="l00063"></a>00063         <a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d" title="Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird...">PSX_receive_data</a>(state);
+<a name="l00064"></a>00064         <a class="code" href="group__sbertling__psx.html#g5e2c00dc12bb2c48ed7a12d608cde390" title="Wartet bis ACK auf LOW ist.">WAIT_FOR_ACK</a>;
+<a name="l00065"></a>00065         <span class="keywordflow">if</span>(state == CMD_CONFIG_OFF)
+<a name="l00066"></a>00066         {
+<a name="l00067"></a>00067                 <a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d" title="Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird...">PSX_receive_data</a>(CMD_CONFIG_EXIT);
+<a name="l00068"></a>00068                 <a class="code" href="group__sbertling__psx.html#g5e2c00dc12bb2c48ed7a12d608cde390" title="Wartet bis ACK auf LOW ist.">WAIT_FOR_ACK</a>;
+<a name="l00069"></a>00069                 <a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d" title="Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird...">PSX_receive_data</a>(CMD_CONFIG_EXIT);
+<a name="l00070"></a>00070                 <a class="code" href="group__sbertling__psx.html#g5e2c00dc12bb2c48ed7a12d608cde390" title="Wartet bis ACK auf LOW ist.">WAIT_FOR_ACK</a>;
+<a name="l00071"></a>00071                 <a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d" title="Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird...">PSX_receive_data</a>(CMD_CONFIG_EXIT);
+<a name="l00072"></a>00072                 <a class="code" href="group__sbertling__psx.html#g5e2c00dc12bb2c48ed7a12d608cde390" title="Wartet bis ACK auf LOW ist.">WAIT_FOR_ACK</a>;
+<a name="l00073"></a>00073                 <a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d" title="Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird...">PSX_receive_data</a>(CMD_CONFIG_EXIT);
+<a name="l00074"></a>00074                 <a class="code" href="group__sbertling__psx.html#g5e2c00dc12bb2c48ed7a12d608cde390" title="Wartet bis ACK auf LOW ist.">WAIT_FOR_ACK</a>;
+<a name="l00075"></a>00075                 <a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d" title="Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird...">PSX_receive_data</a>(CMD_CONFIG_EXIT);
+<a name="l00076"></a>00076         }
+<a name="l00077"></a>00077         <span class="keywordflow">else</span>
+<a name="l00078"></a>00078         {
+<a name="l00079"></a>00079                 <a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d" title="Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird...">PSX_receive_data</a>(<a class="code" href="group__sbertling__psx.html#g433697a25587c6ffe8a14f02e5be9066" title="Ruhelage.">CMD_IDLE</a>);
+<a name="l00080"></a>00080         }
+<a name="l00081"></a>00081         
+<a name="l00082"></a>00082         <span class="comment">// ATT wieder auf High setzen, Ende der Übertragung</span>
+<a name="l00083"></a>00083         _delay_us(<a class="code" href="group__sbertling__psx.html#gda472ea4d9f4eb74a074dc6f034981bc" title="Zeit in ľs, die CLK auf einem Pegel bleibt.">TIME_CLK</a>);
+<a name="l00084"></a>00084         <a class="code" href="group__sbertling__psx.html#g02ee0ee11a14a6a50f97167ce8e189db" title="Port an dem das Pad angeschlossen wird.">PSX_PORT</a> |= (1&lt;&lt;<a class="code" href="group__sbertling__psx.html#g2670cee734a1d32f4f41c1ecd24a34f4" title="ATT Pin.">ATT_PIN</a>);
+<a name="l00085"></a>00085 }
+<a name="l00086"></a>00086 
+<a name="l00087"></a><a class="code" href="group__sbertling__psx.html#g543b314b6e1e1445f8e0bfa4fe517160">00087</a> <span class="keywordtype">void</span> <a class="code" href="group__sbertling__psx.html#g543b314b6e1e1445f8e0bfa4fe517160" title="Setzt die Eingabe Methode (Analog oder Digital).">PSX_set_input_mode</a>(uint8_t mode, uint8_t lock)
+<a name="l00088"></a>00088 {
+<a name="l00089"></a>00089         <a class="code" href="group__sbertling__psx.html#g52b1fe8f6c346c01f0562d76b86d11ca" title="Versetzt den Controller in den Config Mode.">PSX_set_config_mode</a>(CMD_CONFIG_ON);
+<a name="l00090"></a>00090         _delay_ms(DELAY_TIME);
+<a name="l00091"></a>00091         <span class="comment">// ATT auf LOW setzen</span>
+<a name="l00092"></a>00092         <a class="code" href="group__sbertling__psx.html#g02ee0ee11a14a6a50f97167ce8e189db" title="Port an dem das Pad angeschlossen wird.">PSX_PORT</a> &amp;= ~(1&lt;&lt;<a class="code" href="group__sbertling__psx.html#g2670cee734a1d32f4f41c1ecd24a34f4" title="ATT Pin.">ATT_PIN</a>);
+<a name="l00093"></a>00093         
+<a name="l00094"></a>00094         <a class="code" href="group__sbertling__psx.html#g770d69ab9c9335fea389e53ceb670830" title="Liest den Header aus.">PSX_get_header</a>(<a class="code" href="group__sbertling__psx.html#gb97974c97f9d2dfb60eab012420cd051" title="Wechselt zwischen Analog und Digital Modus. Controller muss in Config Modus sein...">CMD_SWITCH_MODE</a>);
+<a name="l00095"></a>00095         <span class="keywordflow">if</span>(pad_state == <a class="code" href="group__sbertling__psx.html#g532bc183c7827d597c7f55fb55cc701d" title="Headerinformation. Controller sendet dies, wenn der Config Modus an ist.">DATA_CONFIG_ON</a>)
+<a name="l00096"></a>00096         {
+<a name="l00097"></a>00097                 <a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d" title="Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird...">PSX_receive_data</a>(mode);
+<a name="l00098"></a>00098                 <a class="code" href="group__sbertling__psx.html#g5e2c00dc12bb2c48ed7a12d608cde390" title="Wartet bis ACK auf LOW ist.">WAIT_FOR_ACK</a>;
+<a name="l00099"></a>00099                 <a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d" title="Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird...">PSX_receive_data</a>(lock);
+<a name="l00100"></a>00100                 <a class="code" href="group__sbertling__psx.html#g5e2c00dc12bb2c48ed7a12d608cde390" title="Wartet bis ACK auf LOW ist.">WAIT_FOR_ACK</a>;
+<a name="l00101"></a>00101                 <a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d" title="Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird...">PSX_receive_data</a>(<a class="code" href="group__sbertling__psx.html#g433697a25587c6ffe8a14f02e5be9066" title="Ruhelage.">CMD_IDLE</a>);
+<a name="l00102"></a>00102                 <a class="code" href="group__sbertling__psx.html#g5e2c00dc12bb2c48ed7a12d608cde390" title="Wartet bis ACK auf LOW ist.">WAIT_FOR_ACK</a>;
+<a name="l00103"></a>00103                 <a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d" title="Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird...">PSX_receive_data</a>(<a class="code" href="group__sbertling__psx.html#g433697a25587c6ffe8a14f02e5be9066" title="Ruhelage.">CMD_IDLE</a>);
+<a name="l00104"></a>00104                 <a class="code" href="group__sbertling__psx.html#g5e2c00dc12bb2c48ed7a12d608cde390" title="Wartet bis ACK auf LOW ist.">WAIT_FOR_ACK</a>;
+<a name="l00105"></a>00105                 <a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d" title="Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird...">PSX_receive_data</a>(<a class="code" href="group__sbertling__psx.html#g433697a25587c6ffe8a14f02e5be9066" title="Ruhelage.">CMD_IDLE</a>);
+<a name="l00106"></a>00106                 <a class="code" href="group__sbertling__psx.html#g5e2c00dc12bb2c48ed7a12d608cde390" title="Wartet bis ACK auf LOW ist.">WAIT_FOR_ACK</a>;
+<a name="l00107"></a>00107                 <a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d" title="Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird...">PSX_receive_data</a>(<a class="code" href="group__sbertling__psx.html#g433697a25587c6ffe8a14f02e5be9066" title="Ruhelage.">CMD_IDLE</a>);
+<a name="l00108"></a>00108         }
+<a name="l00109"></a>00109                 
+<a name="l00110"></a>00110         <span class="comment">// ATT wieder auf High setzen, Ende der Übertragung</span>
+<a name="l00111"></a>00111         _delay_us(<a class="code" href="group__sbertling__psx.html#gda472ea4d9f4eb74a074dc6f034981bc" title="Zeit in ľs, die CLK auf einem Pegel bleibt.">TIME_CLK</a>);
+<a name="l00112"></a>00112         <a class="code" href="group__sbertling__psx.html#g02ee0ee11a14a6a50f97167ce8e189db" title="Port an dem das Pad angeschlossen wird.">PSX_PORT</a> |= (1&lt;&lt;<a class="code" href="group__sbertling__psx.html#g2670cee734a1d32f4f41c1ecd24a34f4" title="ATT Pin.">ATT_PIN</a>);
+<a name="l00113"></a>00113         <a class="code" href="group__sbertling__psx.html#g52b1fe8f6c346c01f0562d76b86d11ca" title="Versetzt den Controller in den Config Mode.">PSX_set_config_mode</a>(CMD_CONFIG_OFF);
+<a name="l00114"></a>00114 }
+<a name="l00115"></a>00115 
+<a name="l00116"></a><a class="code" href="group__sbertling__psx.html#ge4ef19978fbd8f2b963f06a9b7ff090f">00116</a> <span class="keywordtype">void</span> <a class="code" href="group__sbertling__psx.html#ge4ef19978fbd8f2b963f06a9b7ff090f" title="Configuriert den Controller Druckdaten der Tasten zu senden.">PSX_set_pressure_mode</a>(uint8_t state)
+<a name="l00117"></a>00117 {
+<a name="l00118"></a>00118         <a class="code" href="group__sbertling__psx.html#g52b1fe8f6c346c01f0562d76b86d11ca" title="Versetzt den Controller in den Config Mode.">PSX_set_config_mode</a>(CMD_CONFIG_ON);
+<a name="l00119"></a>00119         _delay_ms(DELAY_TIME);
+<a name="l00120"></a>00120         <span class="comment">// ATT auf LOW setzen</span>
+<a name="l00121"></a>00121         <a class="code" href="group__sbertling__psx.html#g02ee0ee11a14a6a50f97167ce8e189db" title="Port an dem das Pad angeschlossen wird.">PSX_PORT</a> &amp;= ~(1&lt;&lt;<a class="code" href="group__sbertling__psx.html#g2670cee734a1d32f4f41c1ecd24a34f4" title="ATT Pin.">ATT_PIN</a>);
+<a name="l00122"></a>00122         
+<a name="l00123"></a>00123         <a class="code" href="group__sbertling__psx.html#g770d69ab9c9335fea389e53ceb670830" title="Liest den Header aus.">PSX_get_header</a>(<a class="code" href="group__sbertling__psx.html#g47795107fe88ffbca153a0cb465afba5" title="Setzt den Druck Modus. Controller muss in Config Modus sein.">CMD_PRESSURE_MODE</a>);
+<a name="l00124"></a>00124         <span class="keywordflow">if</span>(pad_state == <a class="code" href="group__sbertling__psx.html#g532bc183c7827d597c7f55fb55cc701d" title="Headerinformation. Controller sendet dies, wenn der Config Modus an ist.">DATA_CONFIG_ON</a>)
+<a name="l00125"></a>00125         {
+<a name="l00126"></a>00126                 <a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d" title="Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird...">PSX_receive_data</a>(CMD_PRESSURE_1 &amp; state);<span class="comment">//(state &amp;&amp; CMD_PRESSURE_1);</span>
+<a name="l00127"></a>00127                 <a class="code" href="group__sbertling__psx.html#g5e2c00dc12bb2c48ed7a12d608cde390" title="Wartet bis ACK auf LOW ist.">WAIT_FOR_ACK</a>;
+<a name="l00128"></a>00128                 <a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d" title="Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird...">PSX_receive_data</a>(CMD_PRESSURE_2 &amp; state);<span class="comment">//(state &amp;&amp; CMD_PRESSURE_2);</span>
+<a name="l00129"></a>00129                 <a class="code" href="group__sbertling__psx.html#g5e2c00dc12bb2c48ed7a12d608cde390" title="Wartet bis ACK auf LOW ist.">WAIT_FOR_ACK</a>;
+<a name="l00130"></a>00130                 <a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d" title="Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird...">PSX_receive_data</a>(CMD_PRESSURE_3 &amp; state);<span class="comment">//(state &amp;&amp; CMD_PRESSURE_3);</span>
+<a name="l00131"></a>00131                 <a class="code" href="group__sbertling__psx.html#g5e2c00dc12bb2c48ed7a12d608cde390" title="Wartet bis ACK auf LOW ist.">WAIT_FOR_ACK</a>;
+<a name="l00132"></a>00132                 <a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d" title="Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird...">PSX_receive_data</a>(<a class="code" href="group__sbertling__psx.html#g433697a25587c6ffe8a14f02e5be9066" title="Ruhelage.">CMD_IDLE</a>);
+<a name="l00133"></a>00133                 <a class="code" href="group__sbertling__psx.html#g5e2c00dc12bb2c48ed7a12d608cde390" title="Wartet bis ACK auf LOW ist.">WAIT_FOR_ACK</a>;
+<a name="l00134"></a>00134                 <a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d" title="Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird...">PSX_receive_data</a>(<a class="code" href="group__sbertling__psx.html#g433697a25587c6ffe8a14f02e5be9066" title="Ruhelage.">CMD_IDLE</a>);
+<a name="l00135"></a>00135                 <a class="code" href="group__sbertling__psx.html#g5e2c00dc12bb2c48ed7a12d608cde390" title="Wartet bis ACK auf LOW ist.">WAIT_FOR_ACK</a>;
+<a name="l00136"></a>00136                 <a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d" title="Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird...">PSX_receive_data</a>(<a class="code" href="group__sbertling__psx.html#g433697a25587c6ffe8a14f02e5be9066" title="Ruhelage.">CMD_IDLE</a>);
+<a name="l00137"></a>00137         }
+<a name="l00138"></a>00138 
+<a name="l00139"></a>00139         <span class="comment">// ATT wieder auf High setzen, Ende der Übertragung</span>
+<a name="l00140"></a>00140         _delay_us(<a class="code" href="group__sbertling__psx.html#gda472ea4d9f4eb74a074dc6f034981bc" title="Zeit in ľs, die CLK auf einem Pegel bleibt.">TIME_CLK</a>);
+<a name="l00141"></a>00141         <a class="code" href="group__sbertling__psx.html#g02ee0ee11a14a6a50f97167ce8e189db" title="Port an dem das Pad angeschlossen wird.">PSX_PORT</a> |= (1&lt;&lt;<a class="code" href="group__sbertling__psx.html#g2670cee734a1d32f4f41c1ecd24a34f4" title="ATT Pin.">ATT_PIN</a>);
+<a name="l00142"></a>00142         <a class="code" href="group__sbertling__psx.html#g52b1fe8f6c346c01f0562d76b86d11ca" title="Versetzt den Controller in den Config Mode.">PSX_set_config_mode</a>(CMD_CONFIG_OFF);
+<a name="l00143"></a>00143 }
+<a name="l00144"></a>00144 
+<a name="l00145"></a><a class="code" href="group__sbertling__psx.html#g84df423fe7925c3178117df1b2835459">00145</a> uint8_t <a class="code" href="group__sbertling__psx.html#g84df423fe7925c3178117df1b2835459" title="Fragt den aktuellen Status des Controllers ab.">PSX_get_button_state</a>()
+<a name="l00146"></a>00146 {
+<a name="l00147"></a>00147         <span class="comment">// ATT auf LOW setzen</span>
+<a name="l00148"></a>00148         <a class="code" href="group__sbertling__psx.html#g02ee0ee11a14a6a50f97167ce8e189db" title="Port an dem das Pad angeschlossen wird.">PSX_PORT</a> &amp;= ~(1&lt;&lt;<a class="code" href="group__sbertling__psx.html#g2670cee734a1d32f4f41c1ecd24a34f4" title="ATT Pin.">ATT_PIN</a>);
+<a name="l00149"></a>00149 
+<a name="l00150"></a>00150         <a class="code" href="group__sbertling__psx.html#g770d69ab9c9335fea389e53ceb670830" title="Liest den Header aus.">PSX_get_header</a>(<a class="code" href="group__sbertling__psx.html#gb73476a273501fbccd3a257c5138d0c0" title="Dieses Kommando wird direkt nach CMD_START gesendet.">CMD_REQUEST_DATA</a>);
+<a name="l00151"></a>00151         
+<a name="l00152"></a>00152         <span class="keywordflow">if</span>(pad_state == <a class="code" href="group__sbertling__psx.html#g532bc183c7827d597c7f55fb55cc701d" title="Headerinformation. Controller sendet dies, wenn der Config Modus an ist.">DATA_CONFIG_ON</a>) <span class="comment">// im Config Modus können keine Tasten abgefragt werden</span>
+<a name="l00153"></a>00153         {
+<a name="l00154"></a>00154                 <span class="comment">// ATT wieder auf High setzen, Ende der Übertragung</span>
+<a name="l00155"></a>00155                 _delay_us(<a class="code" href="group__sbertling__psx.html#gda472ea4d9f4eb74a074dc6f034981bc" title="Zeit in ľs, die CLK auf einem Pegel bleibt.">TIME_CLK</a>);
+<a name="l00156"></a>00156                 <a class="code" href="group__sbertling__psx.html#g02ee0ee11a14a6a50f97167ce8e189db" title="Port an dem das Pad angeschlossen wird.">PSX_PORT</a> |= (1&lt;&lt;<a class="code" href="group__sbertling__psx.html#g2670cee734a1d32f4f41c1ecd24a34f4" title="ATT Pin.">ATT_PIN</a>);
+<a name="l00157"></a>00157                 <span class="keywordflow">return</span> 0;
+<a name="l00158"></a>00158         }
+<a name="l00159"></a>00159         
+<a name="l00160"></a>00160         uint8_t cycles = 2*(pad_state &amp; 0x0F);
+<a name="l00161"></a>00161         <span class="keywordflow">for</span>(uint8_t i = 0; i &lt; cycles; i++)
+<a name="l00162"></a>00162         {
+<a name="l00163"></a>00163                 button_states[i] = <a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d" title="Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird...">PSX_receive_data</a>(<a class="code" href="group__sbertling__psx.html#g433697a25587c6ffe8a14f02e5be9066" title="Ruhelage.">CMD_IDLE</a>);
+<a name="l00164"></a>00164                 <span class="keywordflow">if</span>(i != cycles - 1)
+<a name="l00165"></a>00165                         <a class="code" href="group__sbertling__psx.html#g5e2c00dc12bb2c48ed7a12d608cde390" title="Wartet bis ACK auf LOW ist.">WAIT_FOR_ACK</a>;   <span class="comment">// letztes Byte bekommt kein ACK mehr</span>
+<a name="l00166"></a>00166         }
+<a name="l00167"></a>00167 
+<a name="l00168"></a>00168         <span class="comment">// ATT wieder auf High setzen, Ende der Übertragung</span>
+<a name="l00169"></a>00169         _delay_us(<a class="code" href="group__sbertling__psx.html#gda472ea4d9f4eb74a074dc6f034981bc" title="Zeit in ľs, die CLK auf einem Pegel bleibt.">TIME_CLK</a>);
+<a name="l00170"></a>00170         <a class="code" href="group__sbertling__psx.html#g02ee0ee11a14a6a50f97167ce8e189db" title="Port an dem das Pad angeschlossen wird.">PSX_PORT</a> |= (1&lt;&lt;<a class="code" href="group__sbertling__psx.html#g2670cee734a1d32f4f41c1ecd24a34f4" title="ATT Pin.">ATT_PIN</a>);
+<a name="l00171"></a>00171         
+<a name="l00172"></a>00172         button_state = button_states[0]&lt;&lt;8;
+<a name="l00173"></a>00173         button_state += button_states[1];
+<a name="l00174"></a>00174         stick_state_right_x = button_states[2];
+<a name="l00175"></a>00175         stick_state_right_y = button_states[3];
+<a name="l00176"></a>00176         stick_state_left_x = button_states[4];
+<a name="l00177"></a>00177         stick_state_left_y = button_states[5];
+<a name="l00178"></a>00178         <span class="keywordflow">for</span>(uint8_t i = 0; i &lt; MAX_BYTES_BUTTON_PRESSURE; i++)
+<a name="l00179"></a>00179                 button_pressure[i] = button_states[6+i];
+<a name="l00180"></a>00180 
+<a name="l00181"></a>00181         <span class="keywordflow">return</span> 1;
+<a name="l00182"></a>00182 }
+<a name="l00183"></a>00183 
+<a name="l00184"></a><a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d">00184</a> uint8_t <a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d" title="Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird...">PSX_receive_data</a>(uint8_t cmd)
+<a name="l00185"></a>00185 {
+<a name="l00186"></a>00186         uint8_t data = 0;
+<a name="l00187"></a>00187         <span class="keywordflow">for</span> (uint8_t n = 0; n &lt; 8; n++) {
+<a name="l00188"></a>00188                 <span class="comment">// CMD setzen, CLK ist auf HIGH</span>
+<a name="l00189"></a>00189                 <span class="keywordflow">if</span>(cmd &amp; (1&lt;&lt;n))
+<a name="l00190"></a>00190                         <a class="code" href="group__sbertling__psx.html#g02ee0ee11a14a6a50f97167ce8e189db" title="Port an dem das Pad angeschlossen wird.">PSX_PORT</a> |= (1&lt;&lt;<a class="code" href="group__sbertling__psx.html#g814f22b45823e731ddc8ac6aa1c8388c" title="CMD Pin.">CMD_PIN</a>);
+<a name="l00191"></a>00191                 <span class="keywordflow">else</span>
+<a name="l00192"></a>00192                         <a class="code" href="group__sbertling__psx.html#g02ee0ee11a14a6a50f97167ce8e189db" title="Port an dem das Pad angeschlossen wird.">PSX_PORT</a> &amp;= ~(1&lt;&lt;<a class="code" href="group__sbertling__psx.html#g814f22b45823e731ddc8ac6aa1c8388c" title="CMD Pin.">CMD_PIN</a>);
+<a name="l00193"></a>00193                 _delay_us(<a class="code" href="group__sbertling__psx.html#gda472ea4d9f4eb74a074dc6f034981bc" title="Zeit in ľs, die CLK auf einem Pegel bleibt.">TIME_CLK</a>);
+<a name="l00194"></a>00194                 <span class="comment">// CLK auf LOW ziehen</span>
+<a name="l00195"></a>00195                 <a class="code" href="group__sbertling__psx.html#g02ee0ee11a14a6a50f97167ce8e189db" title="Port an dem das Pad angeschlossen wird.">PSX_PORT</a> &amp;= ~(1&lt;&lt;<a class="code" href="group__sbertling__psx.html#g40f496979bb9d7199cca5e0ce136e698" title="CLK Pin.">CLK_PIN</a>);
+<a name="l00196"></a>00196                 _delay_us(<a class="code" href="group__sbertling__psx.html#gda472ea4d9f4eb74a074dc6f034981bc" title="Zeit in ľs, die CLK auf einem Pegel bleibt.">TIME_CLK</a>);
+<a name="l00197"></a>00197                 <span class="comment">// DATA auslesen</span>
+<a name="l00198"></a>00198                 <span class="keywordflow">if</span>( <a class="code" href="group__sbertling__psx.html#gdedf4cd0a9f2a94e9848da1417dd7369" title="PIN register von dem Port, an dem das Pad angeschlossen ist.">PSX_PIN</a> &amp; (1&lt;&lt;<a class="code" href="group__sbertling__psx.html#gdad67fe595ea440c8f8247ec2cddf070" title="DATA Pin.">DATA_PIN</a>) )
+<a name="l00199"></a>00199                         data |= (1&lt;&lt;n);
+<a name="l00200"></a>00200                 <span class="comment">// CLK wieder auf HIGH setzen</span>
+<a name="l00201"></a>00201                 <a class="code" href="group__sbertling__psx.html#g02ee0ee11a14a6a50f97167ce8e189db" title="Port an dem das Pad angeschlossen wird.">PSX_PORT</a> |= (1&lt;&lt;<a class="code" href="group__sbertling__psx.html#g40f496979bb9d7199cca5e0ce136e698" title="CLK Pin.">CLK_PIN</a>);
+<a name="l00202"></a>00202         }
+<a name="l00203"></a>00203         <span class="keywordflow">return</span> data;
+<a name="l00204"></a>00204 }
+<a name="l00205"></a>00205 
+<a name="l00206"></a><a class="code" href="group__sbertling__psx.html#g394c604cef2eb8973740609c4ecd0b68">00206</a> uint8_t <a class="code" href="group__sbertling__psx.html#g394c604cef2eb8973740609c4ecd0b68" title="Überprüft, ob eine bestimmte Taste gedrückt ist.">PSX_button_pressed</a>(uint16_t button)
+<a name="l00207"></a>00207 {
+<a name="l00208"></a>00208         <span class="keywordflow">return</span> !(button_state &amp; button);
+<a name="l00209"></a>00209 }
+<a name="l00210"></a>00210 
+<a name="l00211"></a><a class="code" href="group__sbertling__psx.html#g832f1b84509d56c2cee8b20c7d6865bb">00211</a> uint8_t <a class="code" href="group__sbertling__psx.html#g832f1b84509d56c2cee8b20c7d6865bb" title="Gibt den Wert des als Parameter übergebenen Analogsticks zurück.">PSX_get_analog_value</a>(uint8_t stick)
+<a name="l00212"></a>00212 {
+<a name="l00213"></a>00213         <span class="keywordflow">if</span>( (pad_state &amp; 0xF0) == PAD_ANALOG)
+<a name="l00214"></a>00214         {
+<a name="l00215"></a>00215                 <span class="keywordflow">switch</span> (stick) {
+<a name="l00216"></a>00216                         <span class="keywordflow">case</span> <a class="code" href="group__sbertling__psx.html#g2871ba4640bdf84d057fba0b5b0291bd" title="Linker Analogstick in X Richtung.">STICK_LEFT_X</a>:
+<a name="l00217"></a>00217                                 <span class="keywordflow">return</span> stick_state_left_x;
+<a name="l00218"></a>00218                         <span class="keywordflow">case</span> <a class="code" href="group__sbertling__psx.html#g745507c674706b55a057f42abc11c7cd" title="Linker Analogstick in Y Richtung.">STICK_LEFT_Y</a>:
+<a name="l00219"></a>00219                                 <span class="keywordflow">return</span> stick_state_left_y;
+<a name="l00220"></a>00220                         <span class="keywordflow">case</span> <a class="code" href="group__sbertling__psx.html#g6d5ae57e6753578903e1ef8ef8b153ca" title="Rechter Analogstick in X Richtung.">STICK_RIGHT_X</a>:
+<a name="l00221"></a>00221                                 <span class="keywordflow">return</span> stick_state_right_x;
+<a name="l00222"></a>00222                         <span class="keywordflow">case</span> <a class="code" href="group__sbertling__psx.html#g7dd84428fb470e0cb30a0ed991ca2cac" title="Rechter Analogstick in Y Richtung.">STICK_RIGHT_Y</a>:
+<a name="l00223"></a>00223                                 <span class="keywordflow">return</span> stick_state_right_y;
+<a name="l00224"></a>00224                         <span class="keywordflow">default</span>:
+<a name="l00225"></a>00225                                 <span class="keywordflow">return</span> 0x7F; <span class="comment">// 0xFF / 2</span>
+<a name="l00226"></a>00226                                 <span class="keywordflow">break</span>;
+<a name="l00227"></a>00227                 }
+<a name="l00228"></a>00228         }
+<a name="l00229"></a>00229         <span class="keywordflow">else</span> 
+<a name="l00230"></a>00230                 <span class="keywordflow">return</span> 0x7F;
+<a name="l00231"></a>00231 }
+<a name="l00232"></a>00232 
+<a name="l00233"></a><a class="code" href="group__sbertling__psx.html#g4321dfbc2340cb7460ddf2f2e733b5df">00233</a> uint8_t <a class="code" href="group__sbertling__psx.html#g4321dfbc2340cb7460ddf2f2e733b5df" title="Gibt den aktuellen Druckwert einer Taste zurück.">PSX_get_button_pressure</a>(uint8_t button)
+<a name="l00234"></a>00234 {
+<a name="l00235"></a>00235         <span class="keywordflow">return</span> button_pressure[button];
+<a name="l00236"></a>00236 }
+</pre></div></div>
+<hr size="1"><address style="text-align: right;"><small>Erzeugt am Thu May 13 20:52:31 2010 für PSX von&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.9 </small></address>
+</body>
+</html>

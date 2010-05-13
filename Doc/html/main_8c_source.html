@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>PSX: main.c Quellcode</title>
+<link href="tabs.css" rel="stylesheet" type="text/css">
+<link href="doxygen.css" rel="stylesheet" type="text/css">
+</head><body>
+<!-- Erzeugt von Doxygen 1.5.9 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="main.html"><span>Hauptseite</span></a></li>
+      <li><a href="modules.html"><span>Module</span></a></li>
+      <li class="current"><a href="files.html"><span>Dateien</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs">
+    <ul>
+      <li><a href="files.html"><span>Auflistung&nbsp;der&nbsp;Dateien</span></a></li>
+    </ul>
+  </div>
+<h1>main.c</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#include "global.h"</span>
+<a name="l00002"></a>00002 <span class="preprocessor">#include "psx.h"</span>
+<a name="l00003"></a>00003 <span class="preprocessor">#include "uart.h"</span>
+<a name="l00004"></a>00004 
+<a name="l00005"></a>00005 <span class="preprocessor">#include &lt;avr/io.h&gt;</span>
+<a name="l00006"></a>00006 <span class="preprocessor">#include &lt;util/delay.h&gt;</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="keywordtype">int</span> main()
+<a name="l00009"></a>00009 {
+<a name="l00010"></a>00010         initUART();
+<a name="l00011"></a>00011         UART_enable();
+<a name="l00012"></a>00012         UART_puts(<span class="stringliteral">"\r\nSTARTING...\r\n"</span>);
+<a name="l00013"></a>00013         <a class="code" href="group__sbertling__psx.html#gf9046959e4bf337331e4a598fc34d8a9" title="Initialisiert die Ports des AVR.">PSX_init</a>();
+<a name="l00014"></a>00014         _delay_ms(1000);
+<a name="l00015"></a>00015         UART_puts(<span class="stringliteral">"\r\nENTERING MAIN...\r\n"</span>);
+<a name="l00016"></a>00016         <span class="keywordflow">while</span>(1)
+<a name="l00017"></a>00017         {
+<a name="l00018"></a>00018                 _delay_ms(50);
+<a name="l00019"></a>00019                 <a class="code" href="group__sbertling__psx.html#g84df423fe7925c3178117df1b2835459" title="Fragt den aktuellen Status des Controllers ab.">PSX_get_button_state</a>();
+<a name="l00020"></a>00020                 UART_puth(<a class="code" href="group__sbertling__psx.html#g4321dfbc2340cb7460ddf2f2e733b5df" title="Gibt den aktuellen Druckwert einer Taste zurück.">PSX_get_button_pressure</a>(BUTTON_PRESSURE_R2)); 
+<a name="l00021"></a>00021                 UART_puts(<span class="stringliteral">" "</span>); 
+<a name="l00022"></a>00022                 <span class="keywordflow">if</span>(<a class="code" href="group__sbertling__psx.html#g394c604cef2eb8973740609c4ecd0b68" title="Überprüft, ob eine bestimmte Taste gedrückt ist.">PSX_button_pressed</a>(<a class="code" href="group__sbertling__psx.html#g9252de56849507a369e76ec9569fe804" title="Quadrat Taste.">BUTTON_SQUARE</a>))
+<a name="l00023"></a>00023                 {
+<a name="l00024"></a>00024                         <a class="code" href="group__sbertling__psx.html#ge4ef19978fbd8f2b963f06a9b7ff090f" title="Configuriert den Controller Druckdaten der Tasten zu senden.">PSX_set_pressure_mode</a>(CMD_PRESSURE_OFF);
+<a name="l00025"></a>00025                 }
+<a name="l00026"></a>00026                 <span class="keywordflow">if</span>(<a class="code" href="group__sbertling__psx.html#g394c604cef2eb8973740609c4ecd0b68" title="Überprüft, ob eine bestimmte Taste gedrückt ist.">PSX_button_pressed</a>(<a class="code" href="group__sbertling__psx.html#ge56c3ac9d22c586e15eb69415f4769bf" title="Dreieck Taste.">BUTTON_TRIANGLE</a>))
+<a name="l00027"></a>00027                 {
+<a name="l00028"></a>00028                         <a class="code" href="group__sbertling__psx.html#ge4ef19978fbd8f2b963f06a9b7ff090f" title="Configuriert den Controller Druckdaten der Tasten zu senden.">PSX_set_pressure_mode</a>(CMD_PRESSURE_ON);
+<a name="l00029"></a>00029                 }
+<a name="l00030"></a>00030                 <span class="keywordflow">if</span>(<a class="code" href="group__sbertling__psx.html#g394c604cef2eb8973740609c4ecd0b68" title="Überprüft, ob eine bestimmte Taste gedrückt ist.">PSX_button_pressed</a>(<a class="code" href="group__sbertling__psx.html#g0d1e25e9a7b1ae94e302e91314270941" title="R2 Taste.">BUTTON_R1</a>))
+<a name="l00031"></a>00031                         <a class="code" href="group__sbertling__psx.html#g543b314b6e1e1445f8e0bfa4fe517160" title="Setzt die Eingabe Methode (Analog oder Digital).">PSX_set_input_mode</a>(CMD_SET_ANALOG, CMD_LOCK_OFF);
+<a name="l00032"></a>00032                 <span class="keywordflow">if</span>(<a class="code" href="group__sbertling__psx.html#g394c604cef2eb8973740609c4ecd0b68" title="Überprüft, ob eine bestimmte Taste gedrückt ist.">PSX_button_pressed</a>(<a class="code" href="group__sbertling__psx.html#g76cbe60b17d0d40b6f4441b898504f69" title="L2 Taste.">BUTTON_L1</a>))
+<a name="l00033"></a>00033                         <a class="code" href="group__sbertling__psx.html#g543b314b6e1e1445f8e0bfa4fe517160" title="Setzt die Eingabe Methode (Analog oder Digital).">PSX_set_input_mode</a>(CMD_SET_DIGITAL, CMD_LOCK_OFF);
+<a name="l00034"></a>00034         }
+<a name="l00035"></a>00035         <span class="keywordflow">return</span> 0;
+<a name="l00036"></a>00036 }
+</pre></div></div>
+<hr size="1"><address style="text-align: right;"><small>Erzeugt am Thu May 13 20:52:31 2010 für PSX von&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.9 </small></address>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>PSX: psx.h Quellcode</title>
+<link href="tabs.css" rel="stylesheet" type="text/css">
+<link href="doxygen.css" rel="stylesheet" type="text/css">
+</head><body>
+<!-- Erzeugt von Doxygen 1.5.9 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="main.html"><span>Hauptseite</span></a></li>
+      <li><a href="modules.html"><span>Module</span></a></li>
+      <li class="current"><a href="files.html"><span>Dateien</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs">
+    <ul>
+      <li><a href="files.html"><span>Auflistung&nbsp;der&nbsp;Dateien</span></a></li>
+    </ul>
+  </div>
+<h1>psx.h</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef PSX_H_</span>
+<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define PSX_H_</span>
+<a name="l00003"></a>00003 <span class="preprocessor"></span>
+<a name="l00021"></a>00021 
+<a name="l00022"></a>00022 <span class="preprocessor">#include "global.h"</span>
+<a name="l00023"></a>00023 
+<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;avr/io.h&gt;</span>
+<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;util/delay.h&gt;</span>
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027 <span class="comment">// Port defines </span>
+<a name="l00028"></a><a class="code" href="group__sbertling__psx.html#g02ee0ee11a14a6a50f97167ce8e189db">00028</a> <span class="preprocessor">#define PSX_PORT        PORTB   </span>
+<a name="l00029"></a><a class="code" href="group__sbertling__psx.html#g87dfac806f139e2f7cc5a759eaa02f54">00029</a> <span class="preprocessor">#define PSX_DDR         DDRB    </span>
+<a name="l00030"></a><a class="code" href="group__sbertling__psx.html#gdedf4cd0a9f2a94e9848da1417dd7369">00030</a> <span class="preprocessor">#define PSX_PIN         PINB    </span>
+<a name="l00031"></a>00031 <span class="preprocessor"></span>
+<a name="l00032"></a><a class="code" href="group__sbertling__psx.html#g40f496979bb9d7199cca5e0ce136e698">00032</a> <span class="preprocessor"></span><span class="preprocessor">#define CLK_PIN         PB2             </span>
+<a name="l00033"></a><a class="code" href="group__sbertling__psx.html#g2670cee734a1d32f4f41c1ecd24a34f4">00033</a> <span class="preprocessor">#define ATT_PIN         PB3             </span>
+<a name="l00034"></a><a class="code" href="group__sbertling__psx.html#g814f22b45823e731ddc8ac6aa1c8388c">00034</a> <span class="preprocessor">#define CMD_PIN         PB4             </span>
+<a name="l00035"></a><a class="code" href="group__sbertling__psx.html#g63c933f788e6b3cf747d4e1e6cb455d2">00035</a> <span class="preprocessor">#define ACK_PIN         PB1             </span>
+<a name="l00036"></a><a class="code" href="group__sbertling__psx.html#gdad67fe595ea440c8f8247ec2cddf070">00036</a> <span class="preprocessor">#define DATA_PIN        PB5             </span>
+<a name="l00037"></a>00037 <span class="preprocessor"></span>
+<a name="l00038"></a>00038 <span class="preprocessor"></span><span class="comment">// Zeitkonstanten</span>
+<a name="l00039"></a><a class="code" href="group__sbertling__psx.html#gda472ea4d9f4eb74a074dc6f034981bc">00039</a> <span class="preprocessor">#define TIME_CLK        5       </span>
+<a name="l00040"></a>00040 <span class="preprocessor">#define DELAY_TIME      5</span>
+<a name="l00041"></a>00041 <span class="preprocessor"></span>
+<a name="l00042"></a>00042 <span class="preprocessor">#define MAX_BYTES_BUTTON_PRESSURE       12</span>
+<a name="l00043"></a>00043 <span class="preprocessor"></span><span class="preprocessor">#define MAX_BYTES                                       21</span>
+<a name="l00044"></a>00044 <span class="preprocessor"></span>
+<a name="l00045"></a>00045 <span class="comment">// Makros</span>
+<a name="l00046"></a><a class="code" href="group__sbertling__psx.html#g5e2c00dc12bb2c48ed7a12d608cde390">00046</a> <span class="preprocessor">#define WAIT_FOR_ACK    while((PSX_PIN &amp; (1&lt;&lt;ACK_PIN))) </span>
+<a name="l00047"></a>00047 <span class="preprocessor"></span>
+<a name="l00048"></a>00048 <span class="preprocessor"></span><span class="comment">// Befehlskonstanten</span>
+<a name="l00049"></a><a class="code" href="group__sbertling__psx.html#gb905e6aff2332984df0552c6b50203f2">00049</a> <span class="preprocessor">#define CMD_START                       0x01    </span>
+<a name="l00050"></a><a class="code" href="group__sbertling__psx.html#gb73476a273501fbccd3a257c5138d0c0">00050</a> <span class="preprocessor">#define CMD_REQUEST_DATA        0x42    </span>
+<a name="l00051"></a><a class="code" href="group__sbertling__psx.html#g8cec63f1c0d443c689128fa497bef22d">00051</a> <span class="preprocessor">#define CMD_SET_CONFIG          0x43    </span>
+<a name="l00052"></a>00052 <span class="preprocessor">#define CMD_CONFIG_ON           0x01</span>
+<a name="l00053"></a>00053 <span class="preprocessor"></span><span class="preprocessor">#define CMD_CONFIG_OFF          0x00</span>
+<a name="l00054"></a>00054 <span class="preprocessor"></span><span class="preprocessor">#define CMD_CONFIG_EXIT         0x5A</span>
+<a name="l00055"></a><a class="code" href="group__sbertling__psx.html#gb97974c97f9d2dfb60eab012420cd051">00055</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_SWITCH_MODE         0x44    </span>
+<a name="l00056"></a>00056 <span class="preprocessor">#define CMD_SET_ANALOG          0x01</span>
+<a name="l00057"></a>00057 <span class="preprocessor"></span><span class="preprocessor">#define CMD_SET_DIGITAL         0x00</span>
+<a name="l00058"></a>00058 <span class="preprocessor"></span><span class="preprocessor">#define CMD_LOCK_ON                     0x03</span>
+<a name="l00059"></a>00059 <span class="preprocessor"></span><span class="preprocessor">#define CMD_LOCK_OFF            0x00</span>
+<a name="l00060"></a><a class="code" href="group__sbertling__psx.html#gf37d32ff66a9aacc8ab73a2c27962415">00060</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_MORE_INFO           0x45    </span>
+<a name="l00061"></a><a class="code" href="group__sbertling__psx.html#g47795107fe88ffbca153a0cb465afba5">00061</a> <span class="preprocessor">#define CMD_PRESSURE_MODE       0x4F    </span>
+<a name="l00062"></a>00062 <span class="preprocessor">#define CMD_PRESSURE_1          0xFF</span>
+<a name="l00063"></a>00063 <span class="preprocessor"></span><span class="preprocessor">#define CMD_PRESSURE_2          0xFF</span>
+<a name="l00064"></a>00064 <span class="preprocessor"></span><span class="preprocessor">#define CMD_PRESSURE_3          0x03</span>
+<a name="l00065"></a>00065 <span class="preprocessor"></span><span class="preprocessor">#define CMD_PRESSURE_ON         0xFF</span>
+<a name="l00066"></a>00066 <span class="preprocessor"></span><span class="preprocessor">#define CMD_PRESSURE_OFF        0x00</span>
+<a name="l00067"></a><a class="code" href="group__sbertling__psx.html#g433697a25587c6ffe8a14f02e5be9066">00067</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_IDLE                        0x00    </span>
+<a name="l00068"></a>00068 <span class="preprocessor"></span>
+<a name="l00069"></a>00069 <span class="preprocessor"></span><span class="comment">// Datenkonstanten</span>
+<a name="l00070"></a><a class="code" href="group__sbertling__psx.html#g83f2a9aefcab14183160459d70ead85b">00070</a> <span class="preprocessor">#define DATA_REQUEST_RESPONSE   0x5A    </span>
+<a name="l00071"></a><a class="code" href="group__sbertling__psx.html#g532bc183c7827d597c7f55fb55cc701d">00071</a> <span class="preprocessor">#define DATA_CONFIG_ON                  0xF3    </span>
+<a name="l00072"></a><a class="code" href="group__sbertling__psx.html#g14dd685c3436471dc667174375c88efa">00072</a> <span class="preprocessor">#define DATA_DIGITAL                    0x41    </span>
+<a name="l00073"></a><a class="code" href="group__sbertling__psx.html#gf5ff5e329b0851cac5752a513fbb0ece">00073</a> <span class="preprocessor">#define DATA_NEGCON                             0x23    </span>
+<a name="l00074"></a><a class="code" href="group__sbertling__psx.html#g7a977a36962413e00c4c6171e2e8228f">00074</a> <span class="preprocessor">#define DATA_ANALOG                             0x73    </span>
+<a name="l00075"></a><a class="code" href="group__sbertling__psx.html#g682caa4557dd755c46fc09ddcceaa0a9">00075</a> <span class="preprocessor">#define DATA_PSX_MOUSE                  0x12    </span>
+<a name="l00076"></a>00076 <span class="preprocessor"></span>
+<a name="l00077"></a>00077 <span class="preprocessor"></span><span class="comment">// Controllerkonstanten</span>
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079 <span class="preprocessor">#define PAD_DIGITAL             0x40</span>
+<a name="l00080"></a>00080 <span class="preprocessor"></span><span class="preprocessor">#define PAD_ANALOG              0x70</span>
+<a name="l00081"></a>00081 <span class="preprocessor"></span><span class="preprocessor">#define PAD_CONFIG              0xF0</span>
+<a name="l00082"></a>00082 <span class="preprocessor"></span>
+<a name="l00083"></a>00083 <span class="comment">// Standard Defs</span>
+<a name="l00084"></a><a class="code" href="group__sbertling__psx.html#g3eba236539eb518abf1df3687587d994">00084</a> <span class="preprocessor">#define BUTTON_SLCT             0x0100  </span>
+<a name="l00085"></a><a class="code" href="group__sbertling__psx.html#g8f6ea81b68d7d7da25800617fa1f9f2a">00085</a> <span class="preprocessor">#define BUTTON_JOYL             0x0200  </span>
+<a name="l00086"></a><a class="code" href="group__sbertling__psx.html#g8e12cf8f95b23d585e5806cac5109680">00086</a> <span class="preprocessor">#define BUTTON_JOYR             0x0400  </span>
+<a name="l00087"></a><a class="code" href="group__sbertling__psx.html#g0dd865ec0061ef01902beba5e257e298">00087</a> <span class="preprocessor">#define BUTTON_START    0x0800  </span>
+<a name="l00088"></a><a class="code" href="group__sbertling__psx.html#g7639b378d6f757175ed0f9e8552e6cea">00088</a> <span class="preprocessor">#define BUTTON_UP               0x1000  </span>
+<a name="l00089"></a><a class="code" href="group__sbertling__psx.html#g4cebcc5780890f5f5fbca9d072ea9652">00089</a> <span class="preprocessor">#define BUTTON_RIGHT    0x2000  </span>
+<a name="l00090"></a><a class="code" href="group__sbertling__psx.html#g7e8516b8781963aa69154f9fc67b658a">00090</a> <span class="preprocessor">#define BUTTON_DOWN             0x4000  </span>
+<a name="l00091"></a><a class="code" href="group__sbertling__psx.html#gd08344c00ddb49531348245d0c82987f">00091</a> <span class="preprocessor">#define BUTTON_LEFT             0x8000  </span>
+<a name="l00092"></a>00092 <span class="preprocessor"></span>
+<a name="l00093"></a><a class="code" href="group__sbertling__psx.html#g30bb0bb1edb52038138602344a892fc8">00093</a> <span class="preprocessor"></span><span class="preprocessor">#define BUTTON_L2                       0x01    </span>
+<a name="l00094"></a><a class="code" href="group__sbertling__psx.html#g7de1af17484bf0192c373643c2ef10ec">00094</a> <span class="preprocessor">#define BUTTON_R2                       0x02    </span>
+<a name="l00095"></a><a class="code" href="group__sbertling__psx.html#g76cbe60b17d0d40b6f4441b898504f69">00095</a> <span class="preprocessor">#define BUTTON_L1                       0x04    </span>
+<a name="l00096"></a><a class="code" href="group__sbertling__psx.html#g0d1e25e9a7b1ae94e302e91314270941">00096</a> <span class="preprocessor">#define BUTTON_R1                       0x08    </span>
+<a name="l00097"></a><a class="code" href="group__sbertling__psx.html#ge56c3ac9d22c586e15eb69415f4769bf">00097</a> <span class="preprocessor">#define BUTTON_TRIANGLE         0x10    </span>
+<a name="l00098"></a><a class="code" href="group__sbertling__psx.html#g3d686fc450fac7a18bca3057be75ad21">00098</a> <span class="preprocessor">#define BUTTON_CIRCLE           0x20    </span>
+<a name="l00099"></a><a class="code" href="group__sbertling__psx.html#gfc44ef5c16049f9a0f3447360374bbbd">00099</a> <span class="preprocessor">#define BUTTON_CROSS            0x40    </span>
+<a name="l00100"></a><a class="code" href="group__sbertling__psx.html#g9252de56849507a369e76ec9569fe804">00100</a> <span class="preprocessor">#define BUTTON_SQUARE           0x80    </span>
+<a name="l00101"></a>00101 <span class="preprocessor"></span>
+<a name="l00102"></a><a class="code" href="group__sbertling__psx.html#g6d5ae57e6753578903e1ef8ef8b153ca">00102</a> <span class="preprocessor"></span><span class="preprocessor">#define STICK_RIGHT_X           0x01    </span>
+<a name="l00103"></a><a class="code" href="group__sbertling__psx.html#g7dd84428fb470e0cb30a0ed991ca2cac">00103</a> <span class="preprocessor">#define STICK_RIGHT_Y           0x02    </span>
+<a name="l00104"></a><a class="code" href="group__sbertling__psx.html#g2871ba4640bdf84d057fba0b5b0291bd">00104</a> <span class="preprocessor">#define STICK_LEFT_X            0x04    </span>
+<a name="l00105"></a><a class="code" href="group__sbertling__psx.html#g745507c674706b55a057f42abc11c7cd">00105</a> <span class="preprocessor">#define STICK_LEFT_Y            0x08    </span>
+<a name="l00106"></a>00106 <span class="preprocessor"></span>
+<a name="l00107"></a>00107 <span class="preprocessor"></span><span class="preprocessor">#define BUTTON_PRESSURE_R                       0</span>
+<a name="l00108"></a>00108 <span class="preprocessor"></span><span class="preprocessor">#define BUTTON_PRESSURE_L                       1</span>
+<a name="l00109"></a>00109 <span class="preprocessor"></span><span class="preprocessor">#define BUTTON_PRESSURE_U                       2</span>
+<a name="l00110"></a>00110 <span class="preprocessor"></span><span class="preprocessor">#define BUTTON_PRESSURE_D                       3</span>
+<a name="l00111"></a>00111 <span class="preprocessor"></span><span class="preprocessor">#define BUTTON_PRESSURE_TRIANGLE        4</span>
+<a name="l00112"></a>00112 <span class="preprocessor"></span><span class="preprocessor">#define BUTTON_PRESSURE_CIRCLE          5</span>
+<a name="l00113"></a>00113 <span class="preprocessor"></span><span class="preprocessor">#define BUTTON_PRESSURE_CROSS           6</span>
+<a name="l00114"></a>00114 <span class="preprocessor"></span><span class="preprocessor">#define BUTTON_PRESSURE_SQUARE          7</span>
+<a name="l00115"></a>00115 <span class="preprocessor"></span><span class="preprocessor">#define BUTTON_PRESSURE_L1                      8</span>
+<a name="l00116"></a>00116 <span class="preprocessor"></span><span class="preprocessor">#define BUTTON_PRESSURE_R1                      9</span>
+<a name="l00117"></a>00117 <span class="preprocessor"></span><span class="preprocessor">#define BUTTON_PRESSURE_L2                      10</span>
+<a name="l00118"></a>00118 <span class="preprocessor"></span><span class="preprocessor">#define BUTTON_PRESSURE_R2                      11</span>
+<a name="l00119"></a>00119 <span class="preprocessor"></span>
+<a name="l00120"></a>00120 <span class="comment">// NegCon, Maus, etc implementation später</span>
+<a name="l00121"></a>00121 
+<a name="l00125"></a>00125 <span class="keywordtype">void</span> <a class="code" href="group__sbertling__psx.html#gf9046959e4bf337331e4a598fc34d8a9" title="Initialisiert die Ports des AVR.">PSX_init</a>(<span class="keywordtype">void</span>);
+<a name="l00126"></a>00126 
+<a name="l00132"></a>00132 uint8_t <a class="code" href="group__sbertling__psx.html#g770d69ab9c9335fea389e53ceb670830" title="Liest den Header aus.">PSX_get_header</a>(uint8_t cmd);
+<a name="l00133"></a>00133 
+<a name="l00138"></a>00138 <span class="keywordtype">void</span> <a class="code" href="group__sbertling__psx.html#g52b1fe8f6c346c01f0562d76b86d11ca" title="Versetzt den Controller in den Config Mode.">PSX_set_config_mode</a>(uint8_t state);
+<a name="l00139"></a>00139 
+<a name="l00145"></a>00145 <span class="keywordtype">void</span> <a class="code" href="group__sbertling__psx.html#g543b314b6e1e1445f8e0bfa4fe517160" title="Setzt die Eingabe Methode (Analog oder Digital).">PSX_set_input_mode</a>(uint8_t mode, uint8_t lock);
+<a name="l00146"></a>00146 
+<a name="l00151"></a>00151 <span class="keywordtype">void</span> <a class="code" href="group__sbertling__psx.html#ge4ef19978fbd8f2b963f06a9b7ff090f" title="Configuriert den Controller Druckdaten der Tasten zu senden.">PSX_set_pressure_mode</a>(uint8_t state);
+<a name="l00152"></a>00152 
+<a name="l00157"></a>00157 uint8_t <a class="code" href="group__sbertling__psx.html#g84df423fe7925c3178117df1b2835459" title="Fragt den aktuellen Status des Controllers ab.">PSX_get_button_state</a>(<span class="keywordtype">void</span>);
+<a name="l00158"></a>00158 
+<a name="l00164"></a>00164 uint8_t <a class="code" href="group__sbertling__psx.html#g77115235acb26f17b16feaabb4d8158d" title="Empfängt das Datenbyte des Controllers während cmd auf dem CMD Pin gesendet wird...">PSX_receive_data</a>(uint8_t cmd);
+<a name="l00165"></a>00165 
+<a name="l00171"></a>00171 uint8_t <a class="code" href="group__sbertling__psx.html#g394c604cef2eb8973740609c4ecd0b68" title="Überprüft, ob eine bestimmte Taste gedrückt ist.">PSX_button_pressed</a>(uint16_t button);
+<a name="l00172"></a>00172 
+<a name="l00178"></a>00178 uint8_t <a class="code" href="group__sbertling__psx.html#g832f1b84509d56c2cee8b20c7d6865bb" title="Gibt den Wert des als Parameter übergebenen Analogsticks zurück.">PSX_get_analog_value</a>(uint8_t stick);
+<a name="l00179"></a>00179 
+<a name="l00185"></a>00185 uint8_t <a class="code" href="group__sbertling__psx.html#g4321dfbc2340cb7460ddf2f2e733b5df" title="Gibt den aktuellen Druckwert einer Taste zurück.">PSX_get_button_pressure</a>(uint8_t button);
+<a name="l00186"></a>00186 
+<a name="l00189"></a>00189 <span class="preprocessor">#endif </span><span class="comment">/*PSX_H_*/</span>
+</pre></div></div>
+<hr size="1"><address style="text-align: right;"><small>Erzeugt am Thu May 13 20:52:31 2010 für PSX von&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.9 </small></address>
+</body>
+</html>
